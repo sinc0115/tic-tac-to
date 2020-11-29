@@ -101,6 +101,7 @@ body {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     text-align: center;
+    overflow: auto;
   }
 
   .pop-up-content {
@@ -113,6 +114,7 @@ body {
 
   .pop-up button {
     padding: 0.5rem 1rem;
+    margin: 2rem auto;
     border-radius: 10%;
     /* border: 3px solid #20a7e5; */
     box-shadow: -3px 3px 0 #e45436;
@@ -124,12 +126,20 @@ body {
     text-decoration: none;
     outline: none;
     border: none;
+    display: block;
   }
 
   .pop-up button:hover {
     background-color: #FFE51E;
     box-shadow: -2px 2px 0 #e45436;
     transform: translateY(1px);
+  }
+
+  .pop-up img {
+    background-color: #262626;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 15px #262626;
+    width: 40vw;
   }
 
   @media only screen and (min-width: 655px) {

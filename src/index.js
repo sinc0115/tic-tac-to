@@ -15,6 +15,12 @@ function PopUp(props) {
       <div className='pop-up'>
         <div className="pop-up-content">
           <h2>{props.message}</h2>
+          {props.winner == 'Federation' && 
+            <img src={require('./images/Picard.svg').default} alt="Picard" />
+          }
+          {props.winner == 'Borg' &&
+            <img src={require('./images/Locutus.svg').default} alt="Locutus" />
+          }
           <button onClick={props.handlePlayAgain}>Play Again</button>
         </div>
       </div>
@@ -30,7 +36,7 @@ function Square (props) {
       // style={{background: 'url(/images/' + props.value + '.svg)'}}
     >
     {props.value && 
-      <img src={require('./images/' + props.value + '.svg')} alt={props.value} width="10px" height="10px" />
+      <img src={require('./images/' + props.value + '.svg').default} alt={props.value} />
     }
     </button>
   )
@@ -82,7 +88,7 @@ class Board extends React.Component {
     if (prevProps.handleWinner !== this.state.winner) {
       if (this.state.winner == names[0] || this.state.winner == names[1]) {
         this.props.handleWinner(this.state.winner)
-        this.props.handleMessage(`The winner is: ${this.state.winner}`)
+        this.props.handleMessage(`The ${this.state.winner} wins!`)
         this.reset()
         // this.setState({winner: true})
         return
