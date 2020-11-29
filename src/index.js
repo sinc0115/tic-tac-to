@@ -6,8 +6,7 @@ function PopUp(props) {
   return (
       <div className='pop-up'>
         <div className="pop-up-content">
-          <h2>The winner is: </h2>
-          <p>{props.winner}</p>
+          <h2>{props.message}</h2>
           <button onClick={props.handlePlayAgain}>Play Again</button>
         </div>
       </div>
@@ -37,7 +36,8 @@ class Board extends React.Component {
     return {
       squares: Array(9).fill(null),
       xIsNext: true,
-      winner: null
+      winner: null,
+      counter: 0
     }
   }
 
@@ -58,21 +58,26 @@ class Board extends React.Component {
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext,
-      winner: calculateWinner(squares)
+      winner: calculateWinner(squares),
+      counter: this.state.counter + 1
     })
   }
 
   // SEND WINNER TO GAME COMPONENT
   componentDidUpdate(prevProps) {
-    console.log(prevProps.handleWinner)
-    console.log('winner: ' + this.state.winner)
+    // console.log(prevProps.handleWinner)
+    // console.log('winner: ' + this.state.winner)
     if (prevProps.handleWinner !== this.state.winner) {
       if (this.state.winner == 'X' || this.state.winner == 'O') {
-        console.log('X')
         this.props.handleWinner(this.state.winner)
+        this.props.handleMessage(`The winner is: ${this.state.winner}`)
         this.reset()
         // this.setState({winner: true})
         return
+      } else if (this.state.counter === 9) {
+        this.props.handleWinner(true)
+        this.props.handleMessage('It\'s a tie!')
+        this.reset()
       } else {
         return false
       }
@@ -120,10 +125,12 @@ class Game extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      winner: null
+      winner: null,
+      message: ''
     }
 
     this.handleWinner = this.handleWinner.bind(this)
+    this.handleMessage = this.handleMessage.bind(this)
     this.handlePlayAgain = this.handlePlayAgain.bind(this)
   }
 
@@ -133,9 +140,15 @@ class Game extends React.Component {
     return false
   }
 
+  handleMessage(message) {
+    this.setState({message: message})
+    return
+  }
+
   handlePlayAgain() {
     console.log('play again')
     this.setState({winner: null})
+    return
   }
   
   render () {
@@ -144,11 +157,11 @@ class Game extends React.Component {
         <h1>Trek Tac Toe</h1>
         <div className='game'>
           <div className='game-board'>
-            <Board handleWinner={this.handleWinner} />
+            <Board handleWinner={this.handleWinner} handleMessage={this.handleMessage} />
           </div>
         </div>
-        {this.state.winner && 
-          <PopUp winner={this.state.winner} handlePlayAgain={this.handlePlayAgain} />
+        {this.state.winner &&
+          <PopUp winner={this.state.winner} handlePlayAgain={this.handlePlayAgain} message={this.state.message} />
         }
       </div>
     )
