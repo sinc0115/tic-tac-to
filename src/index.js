@@ -2,6 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
+// IMAGES
+import Federation from './images/Federation.svg'
+import Borg from './images/Borg.svg'
+import Picard from './images/Picard.svg'
+import Locutus from './images/Locutus.svg'
+
+let names = ['Federation', 'Borg', 'Picard', 'Locutus']
+
 function PopUp(props) {
   return (
       <div className='pop-up'>
@@ -19,8 +27,11 @@ function Square (props) {
     <button
       className='square'
       onClick={props.onClick}
+      // style={{background: 'url(/images/' + props.value + '.svg)'}}
     >
-      {props.value}
+    {props.value && 
+      <img src={require('./images/' + props.value + '.svg')} alt={props.value} width="10px" height="10px" />
+    }
     </button>
   )
 }
@@ -54,7 +65,8 @@ class Board extends React.Component {
       return
     }
 
-    squares[i] = this.state.xIsNext ? 'X' : 'O'
+    squares[i] = this.state.xIsNext ? names[0] : names[1]
+
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext,
@@ -68,7 +80,7 @@ class Board extends React.Component {
     // console.log(prevProps.handleWinner)
     // console.log('winner: ' + this.state.winner)
     if (prevProps.handleWinner !== this.state.winner) {
-      if (this.state.winner == 'X' || this.state.winner == 'O') {
+      if (this.state.winner == names[0] || this.state.winner == names[1]) {
         this.props.handleWinner(this.state.winner)
         this.props.handleMessage(`The winner is: ${this.state.winner}`)
         this.reset()
@@ -92,15 +104,14 @@ class Board extends React.Component {
     return (
       <Square
         value={this.state.squares[i]}
-        onClick={() => this.handleClick(i)}
-      />
+        onClick={() => this.handleClick(i)} />
     )
   }
 
   render () {
     return (
       <div>
-        <div className='status'>{this.state.winner ? 'Winner!' : 'Next Player: ' + (this.state.xIsNext ? 'X' : 'O')}</div>
+        <div className='status'>{this.state.winner ? 'Winner!' : 'Next Player: ' + (this.state.xIsNext ? 'Federation' : 'Borg')}</div>
         <div className='board-row'>
           {this.renderSquare(0)}
           {this.renderSquare(1)}

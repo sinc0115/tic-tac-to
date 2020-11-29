@@ -81,6 +81,10 @@ body {
   .game-board {
     margin: 0 auto;
   }
+
+  .board-row {
+    box-shadow: -3px 3px 0 #e45436;
+  }
   
   .game-info {
     margin-left: 20px;
