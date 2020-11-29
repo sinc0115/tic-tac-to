@@ -1,6 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Rambla:ital,wght@1,700&display=swap');
+
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    color: #20a7e5;
+    font-size: 2rem;
+    font-family: 'Rambla', sans-serif;
     margin: 20px;
+    /* via. CSS3 Pattern Gallery */
+    /* https://projects.verou.me/css3patterns/#starry-night */
+    background-color:black;
+    background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 10px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 7px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 10px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 5px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    /* End of starry background */
+  }
+
+  .container {
+    margin-top: 3rem;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    text-align: center;
+    color: white;
+    text-shadow: -4px 0px 5px #20a7e5;
   }
   
   ol, ul {
@@ -19,17 +45,17 @@ body {
   
   .square {
     background: #fff;
-    border: 1px solid #999;
+    border: 3px solid black;
     float: left;
-    font-size: 24px;
+    font-size: 3rem;
     font-weight: bold;
-    line-height: 34px;
-    height: 34px;
+    line-height: 3rem;
+    height: 25vw;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 25vw;
   }
   
   .square:focus {
@@ -43,9 +69,69 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    padding: 1rem;
+    /* margin-top: 1rem; */
+  }
+
+  .game-board {
+    margin: 0 auto;
   }
   
   .game-info {
     margin-left: 20px;
   }
-  
+
+  /* POP UP */
+  .pop-up {
+    /* display: hidden; */
+    position: fixed;
+    z-index: 1;
+    padding-top: 4rem;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+
+  .pop-up-content {
+    background-color: black;
+    box-shadow: -7px 7px 0 #e45436;
+    padding: 3rem 1rem;
+    margin: 4rem auto;
+    width: 80vw;
+  }
+
+  .pop-up-visible {
+    display: block;
+  }
+
+  @media only screen and (min-width: 655px) {
+    .square {
+      height: 20vw;
+      width: 20vw;
+    }
+
+    .game {
+      padding: 2rem;
+    }
+  }
+
+  @media only screen and (min-width: 800px) {
+    h1 {
+      font-size: 5rem;
+    }
+
+    .square {
+      font-size: 2rem;
+      line-height: 2rem;
+      height: 15vw;
+      width: 15vw;
+    }
+
+    .game {
+      padding: 0 2rem 2rem 2rem;
+    }
+  }

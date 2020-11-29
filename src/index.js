@@ -2,6 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
+function PopUp(props) {
+  return (
+      <div className='pop-up'>
+        <div className="pop-up-content">
+          <h2>The winner is: </h2>
+          <p>{props.winner}</p>
+          <button onClick={props.handlePlayAgain}>Play Again</button>
+        </div>
+      </div>
+  )
+}
+
+
 function Square (props) {
   return (
     <button
@@ -16,26 +29,60 @@ function Square (props) {
 class Board extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
+    this.state = this.starterState()
+  } 
+  
+  // STARTER STATE
+  starterState () {
+    return {
       squares: Array(9).fill(null),
-      xIsNext: true
+      xIsNext: true,
+      winner: null
     }
   }
 
+  reset() {
+    this.setState(this.starterState())
+  }
+  // STARTER STATE ENDS
+
+  // CLICK ON SQUARES
   handleClick (i) {
     const squares = this.state.squares.slice()
 
-    if (calculateWinner(squares) || squares[i]) {
+    if (this.state.winner || squares[i]) {
       return
     }
 
     squares[i] = this.state.xIsNext ? 'X' : 'O'
     this.setState({
       squares: squares,
-      xIsNext: !this.state.xIsNext
+      xIsNext: !this.state.xIsNext,
+      winner: calculateWinner(squares)
     })
   }
 
+  // SEND WINNER TO GAME COMPONENT
+  componentDidUpdate(prevProps) {
+    console.log(prevProps.handleWinner)
+    console.log('winner: ' + this.state.winner)
+    if (prevProps.handleWinner !== this.state.winner) {
+      if (this.state.winner == 'X' || this.state.winner == 'O') {
+        console.log('X')
+        this.props.handleWinner(this.state.winner)
+        this.reset()
+        // this.setState({winner: true})
+        return
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+    return false
+  }
+
+  // RENDER SQUARES
   renderSquare (i) {
     return (
       <Square
@@ -46,18 +93,9 @@ class Board extends React.Component {
   }
 
   render () {
-    // const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
-    const winner = calculateWinner(this.state.squares)
-    let status
-    if (winner) {
-      status = 'Winner: ' + winner
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'x' : 'O')
-    }
-
     return (
       <div>
-        <div className='status'>{status}</div>
+        <div className='status'>{this.state.winner ? 'Winner!' : 'Next Player: ' + (this.state.xIsNext ? 'X' : 'O')}</div>
         <div className='board-row'>
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -79,16 +117,39 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      winner: null
+    }
+
+    this.handleWinner = this.handleWinner.bind(this)
+    this.handlePlayAgain = this.handlePlayAgain.bind(this)
+  }
+
+  handleWinner(winner) {
+    console.log(winner)
+    this.setState({winner: winner})
+    return false
+  }
+
+  handlePlayAgain() {
+    console.log('play again')
+    this.setState({winner: null})
+  }
+  
   render () {
     return (
-      <div className='game'>
-        <div className='game-board'>
-          <Board />
+      <div className="container">
+        <h1>Trek Tac Toe</h1>
+        <div className='game'>
+          <div className='game-board'>
+            <Board handleWinner={this.handleWinner} />
+          </div>
         </div>
-        {/* <div className='game-info'>
-          <div>{ status }</div>
-          <ol>{ TODO }</ol>
-        </div> */}
+        {this.state.winner && 
+          <PopUp winner={this.state.winner} handlePlayAgain={this.handlePlayAgain} />
+        }
       </div>
     )
   }
