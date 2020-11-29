@@ -43,6 +43,10 @@ body {
     margin-bottom: 10px;
   }
   
+  button {
+    cursor: pointer;
+  }
+
   .square {
     background: #fff;
     border: 3px solid black;
@@ -84,7 +88,6 @@ body {
 
   /* POP UP */
   .pop-up {
-    /* display: hidden; */
     position: fixed;
     z-index: 1;
     padding-top: 4rem;
@@ -104,8 +107,25 @@ body {
     width: 80vw;
   }
 
-  .pop-up-visible {
-    display: block;
+  .pop-up button {
+    padding: 0.5rem 1rem;
+    border-radius: 10%;
+    /* border: 3px solid #20a7e5; */
+    box-shadow: -3px 3px 0 #e45436;
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    font-family: 'Rambla', sans-serif;
+    font-size: 1.3rem;
+    text-decoration: none;
+    outline: none;
+    border: none;
+  }
+
+  .pop-up button:hover {
+    background-color: #FFE51E;
+    box-shadow: -2px 2px 0 #e45436;
+    transform: translateY(1px);
   }
 
   @media only screen and (min-width: 655px) {
@@ -125,13 +145,24 @@ body {
     }
 
     .square {
-      font-size: 2rem;
-      line-height: 2rem;
+      /* font-size: 2rem;
+      line-height: 2rem; */
       height: 15vw;
       width: 15vw;
     }
 
     .game {
       padding: 0 2rem 2rem 2rem;
+    }
+
+    .pop-up-content {
+      padding: 5rem 1rem;
+    }
+  }
+
+  @media only screen and (min-width: 1000px) {
+    .square {
+      height: 10vw;
+      width: 10vw;
     }
   }
