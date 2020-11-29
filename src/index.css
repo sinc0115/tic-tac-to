@@ -28,6 +28,10 @@ body {
     color: white;
     text-shadow: -4px 0px 5px #20a7e5;
   }
+
+  h2 {
+    text-shadow: -1px 0px 3px #20a7e5;
+  }
   
   ol, ul {
     padding-left: 30px;
@@ -106,10 +110,16 @@ body {
 
   .pop-up-content {
     background-color: black;
+    border: 2px solid yellow;
     box-shadow: -7px 7px 0 #e45436;
     padding: 3rem 1rem;
     margin: 4rem auto;
     width: 80vw;
+  }
+
+  .pop-up p {
+    color: white;
+    font-size: 1.5rem;
   }
 
   .pop-up button {
@@ -151,6 +161,12 @@ body {
     .game {
       padding: 2rem;
     }
+
+    .pop-up-content {
+      padding: 1.5rem 1rem;
+      margin: 3rem auto;
+      width: 60vw;
+    }
   }
 
   @media only screen and (min-width: 800px) {
@@ -170,13 +186,19 @@ body {
     }
 
     .pop-up-content {
-      padding: 5rem 1rem;
+      padding: 0 1.5rem;
+      margin: 1.5rem auto 6rem auto;
     }
   }
 
   @media only screen and (min-width: 1000px) {
     .square {
-      height: 10vw;
-      width: 10vw;
+      height: 15vw;
+      width: 15vw;
+    }
+
+    .pop-up-content {
+      padding: 0 3rem;
+      margin: 0.5rem auto 8rem auto;
     }
   }
